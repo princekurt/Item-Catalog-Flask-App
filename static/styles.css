@@ -100,14 +100,14 @@ h3 {
 }
 .banner.main {
 	height: 150px;
-	background: url("/static/top-banner.jpg");
+	background: url("/static/top-banner.png");
 	background-position: right;
 	background-repeat: no-repeat;
 	background-size: cover;
 }
 .banner.menu {
 	height: 150px;
-	background-color: #E1E17F;
+	background-color: #dcfeff;
 }
 .banner.profile {
 	height: 150px;
@@ -121,7 +121,7 @@ h3 {
  	padding: 20px;
 u }
  .restaurant-list:hover {
- 	background-color: #e1e17f;
+ 	background-color: #20bfb1;
  	padding: 20px;
 }
 .menu-item {

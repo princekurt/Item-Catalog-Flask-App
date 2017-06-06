@@ -1,16 +1,12 @@
 {% extends "main.html" %}
 {% block content %}
-{% include "header.html" %}
+{% include "loggedinheader.html" %}
 	<div class="row divider green">
 		<div class="col-md-12"></div>
 	</div>
 	<div class="row banner menu">
 		<div class="col-md-11 col-md-offset-1 padding-none">
 			<h1>{{ category.name }}
-			<figure class="creator">
-				<img src="{{ url_for('static', filename='blank_user.gif') }}">
-				<figcaption>Menu creator's name goes here</figcaption>
-			</figure>
 			</h1>
 
 		</div>
@@ -39,7 +35,7 @@
 			</a>
 			<a href="{{url_for('newCategoryItem', category_id = category.id )}}">
 				<button class="btn btn-default" id="new-menu-item">
-					<span class="glyphicon glyphicon-glass" aria-hidden="true"></span>Add Category Item
+					<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>Add Category Item
 				</button>
 			</a>
 						<a href="{{url_for('deleteCategory', category_id = category.id )}}">
@@ -61,7 +57,7 @@
 								<h3>{{i.name}}</h3>
 								<p>{{i.description}}</p>
 								<a href='{{url_for("editCategoryItem", category_id = category.id, item_id=i.id ) }}'>Edit</a> | 
-								<a href='{{url_for("deleteCategoryItem", category_id = category.id, item_id=i.id ) }}'>Delete</a> -->
+								<a href='{{url_for("deleteCategoryItem", category_id = category.id, item_id=i.id ) }}'>Delete</a>
 							</div>
 					{% endfor %}
 			</div>
