@@ -20,18 +20,22 @@ session = DBSession()
 
 
 # Create dummy user
-User1 = User(name="Robo Barista", email="tinnyTim@udacity.com",
+User1 = User(name="Robo Barista",
+             email="tinnyTim@udacity.com",
              picture='https://pbs.twimg.com/profile_images/2671170543/18debd694829ed78203a5a36dd364160_400x400.png')
 session.add(User1)
 session.commit()
 
-# Menu for UrbanBurger
+
 category1 = Category(id=1, name="Snowboarding")
 
 session.add(category1)
 session.commit()
 
-categoryItem1 = CategoryItem(id=1, name="Goggles", description="Slick and Sharp, anyone could wear them", category=category1)
+categoryItem1 = CategoryItem(id=1, name="Goggles",
+                             description="Slick and Sharp,"
+                                         " anyone could wear them",
+                             category=category1)
 
 session.add(categoryItem1)
 session.commit()
