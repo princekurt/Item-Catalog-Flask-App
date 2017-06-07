@@ -111,21 +111,21 @@ h3 {
 }
 .banner.profile {
 	height: 150px;
-	background-color: #A6E8EB;
+	background-color: #a6e8eb;
 }
 .banner h1 {
 	margin: 45px 0;
 }
- .restaurant-list {
- 	background-color: #F0F0F0;
+ .category-list {
+ 	background-color: #f0f0f0;
  	padding: 20px;
-u }
- .restaurant-list:hover {
+ }
+ .category-list:hover {
  	background-color: #20bfb1;
  	padding: 20px;
 }
 .menu-item {
-	background: #F0F0F0;
+	background: #f0f0f0;
 	padding: 20px;
 	margin: 20px;
 	margin-left: -20px;
@@ -145,12 +145,12 @@ u }
 }
 .creator figcaption {
 	font-size: 14px;
-	color: #7B7573;
+	color: #7b7573;
 	font-weight: 400;
 	margin-top: -20px;
 }
 .flash {
-	background-color: #98FB98;
+	background-color: #98fb98;
 	width:100%;
 	text-decoration: none;
 

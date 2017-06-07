@@ -109,15 +109,15 @@ def gconnect():
     if result['issued_to'] != CLIENT_ID:
         response = make_response(
             json.dumps("Token's client ID does not match app's."), 401)
-        print
-        "Token's client ID does not match app's."
+        print("Token's client ID does not match app's.")
         response.headers['Content-Type'] = 'application/json'
         return response
 
     stored_access_token = login_session.get('access_token')
     stored_gplus_id = login_session.get('gplus_id')
     if stored_access_token is not None and gplus_id == stored_gplus_id:
-        response = make_response(json.dumps('Current user is already connected.'),
+        response = make_response(json.dumps('Current'
+                                            ' user is already connected.'),
                                  200)
         response.headers['Content-Type'] = 'application/json'
         return response
@@ -142,7 +142,6 @@ def gconnect():
         user_id = createUser(login_session)
     login_session['user_id'] = user_id
 
-
     output = ''
     output += '<h1>Welcome, '
     output += login_session['username']
@@ -152,11 +151,8 @@ def gconnect():
     output += ' " style = "width: 300px; height: 300px;border-radius: 150px;' \
               '-webkit-border-radius: 150px;-moz-border-radius: 150px;"> '
     flash("you are now logged in as %s" % login_session['username'])
-    print
-    "done!"
+    print("done!")
     return output
-
-
 
 # DISCONNECT - Revoke a current user's token and reset their login_session
 
@@ -169,7 +165,8 @@ def gdisconnect():
     print(login_session['username'])
     if access_token is None:
         print('Access Token is None')
-        response = make_response(json.dumps('Current user not connected.'), 401)
+        response = make_response(json.dumps('Current user not connected.'),
+                                 401)
         response.headers['Content-Type'] = 'application/json'
         return response
     url = 'https://accounts.google.com/o/oauth2/revoke?token=%s' % \
@@ -195,7 +192,9 @@ def gdisconnect():
         return response
 
 
-# JSON APIs to view Restaurant Information
+# JSON APIs to view Category Information
+# Specific Item JSON Endpoint
+
 @app.route('/category/<int:category_id>/item/JSON')
 def categorieItemsJSON(category_id):
     category = session.query(Category).filter_by(id=category_id).one()
@@ -203,11 +202,15 @@ def categorieItemsJSON(category_id):
         category_id=category_id).all()
     return jsonify(CategoryItems=[i.serialize for i in items])
 
+# Specific Category JSON Endpoint
+
 
 @app.route('/category/<int:category_id>/items/<int:item_id>/JSON')
 def categoryItemJSON(category_id, item_id):
     Category_Item = session.query(CategoryItem).filter_by(id=item_id).one()
     return jsonify(Category_Item=Category_Item.serialize)
+
+# Json Category endpoint
 
 
 @app.route('/category/JSON')
@@ -227,7 +230,7 @@ def showCategories():
         return render_template('protectedindex.html', categories=categories)
 
 
-# Create a new restaurant
+# Create a new category
 
 
 @app.route('/category/new/', methods=['GET', 'POST'])
@@ -245,7 +248,7 @@ def newCategory():
         return render_template('newCategory.html')
 
 
-# Edit a restaurant
+# Edit a category
 
 
 @app.route('/category/<int:category_id>/edit/', methods=['GET', 'POST'])
@@ -263,7 +266,7 @@ def editCategory(category_id):
         return render_template('editCategory.html', category=editedCategory)
 
 
-# Delete a restaurant
+# Delete a category
 @app.route('/category/<int:category_id>/delete/', methods=['GET', 'POST'])
 def deleteCategory(category_id):
     if 'username' not in login_session:
@@ -276,10 +279,11 @@ def deleteCategory(category_id):
         session.commit()
         return redirect(url_for('showCategories', category_id=category_id))
     else:
-        return render_template('deleteCategory.html', category=categoryToDelete)
+        return render_template('deleteCategory.html',
+                               category=categoryToDelete)
 
 
-# Show a restaurant menu
+# Show a category item list
 
 
 @app.route('/category/<int:category_id>/')
@@ -289,7 +293,8 @@ def showCategory(category_id):
     creator = getUserInfo(category.user_id)
     items = session.query(CategoryItem).filter_by(
         category_id=category_id).all()
-    if 'username' not in login_session or creator.id != login_session['user_id']:
+    if 'username' not in login_session or\
+       creator.id != login_session['user_id']:
         return render_template('publicitems.html',
                                items=items,
                                category=category,
@@ -301,7 +306,7 @@ def showCategory(category_id):
                                creator=creator)
 
 
-# Create a new menu item
+# Create a new category item
 @app.route('/category/<int:category_id>/item/new/', methods=['GET', 'POST'])
 def newCategoryItem(category_id):
     if 'username' not in login_session:
@@ -320,10 +325,11 @@ def newCategoryItem(category_id):
         return render_template('newcategoryitem.html', category_id=category_id)
 
 
-# Edit a menu item
+# Edit a category item
 
 
-@app.route('/category/<int:category_id>/item/<int:item_id>/edit', methods=['GET', 'POST'])
+@app.route('/category/<int:category_id>/item/<int:item_id>/edit',
+           methods=['GET', 'POST'])
 def editCategoryItem(category_id, item_id):
     if 'username' not in login_session:
         return redirect('/login')
@@ -339,11 +345,15 @@ def editCategoryItem(category_id, item_id):
         flash('Category Item Successfully Edited')
         return redirect(url_for('showCategory', category_id=category_id))
     else:
-        return render_template('editcategoryitem.html', category_id=category_id, item_id=item_id, item=editedItem)
+        return render_template('editcategoryitem.html',
+                               category_id=category_id,
+                               item_id=item_id,
+                               item=editedItem)
 
 
-# Delete a menu item
-@app.route('/category/<int:category_id>/item/<int:item_id>/delete', methods=['GET', 'POST'])
+# Delete a category item
+@app.route('/category/<int:category_id>/item/<int:item_id>/delete',
+           methods=['GET', 'POST'])
 def deleteCategoryItem(category_id, item_id):
     if 'username' not in login_session:
         return redirect('/login')
